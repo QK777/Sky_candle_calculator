@@ -1,0 +1,787 @@
+/* ============================================
+   🟦 全体レイアウト
+   ============================================ */
+body {
+  font-family: 'Baloo 2', cursive;
+  background: linear-gradient(135deg, #fdfbff 0%, #eef5ff 40%, #fdf6ff 100%);
+  margin: 0;
+  padding: 24px 12px 260px;
+  color: #222;
+  position: relative;
+}
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   🟦 タイトル
+   ============================================ */
+.page-title-wrapper {
+  width: 100%;
+  text-align: right;
+  margin-bottom: 20px;
+  line-height: 1.15;
+  user-select: none;
+}
+.page-title-line {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  font-size: 32px;
+  letter-spacing: 0.04em;
+}
+.page-title-line:first-child {
+  font-size: 22px;
+  opacity: 0.9;
+}
+
+/* ============================================
+   🟦 クイックパネル
+   ============================================ */
+#quickPanel {
+  display: flex;
+  gap: 12px;
+  margin: -6px 0 18px;
+}
+.quick-btn {
+  padding: 8px 14px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ffffff, #eef3ff);
+  border: 1px solid rgba(140,160,255,0.6);
+  cursor: pointer;
+  font-family: 'Sawarabi Gothic', 'Noto Sans JP', sans-serif;
+  transition: background .25s, box-shadow .25s;
+}
+.quick-btn:hover {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(120,140,220,0.3);
+}
+
+/* ▼ モーダル背景（暗転） */
+#modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+}
+
+/* ▼ モーダル本体（白いカード） */
+#modalWindow {
+  width: 90%;
+  max-width: 600px;
+  height: 80vh;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalPop .25s ease-out;
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ▼ モーダル上部バー */
+#modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f4f6ff;
+  border-bottom: 1px solid rgba(150,150,200,0.3);
+  font-family: 'Sawarabi Gothic', 'Noto Sans JP', sans-serif;
+}
+#modalClose {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ▼ iframe（中身） */
+#modalFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ============================================
+   🟦 カテゴリカード（大枠）
+   ============================================ */
+.category {
+  background:#fff;
+  border-radius:24px;
+  padding:18px 22px 16px;
+  margin-bottom:18px;
+  box-shadow:0 6px 18px rgba(70,90,150,0.22);
+  border:2px solid rgba(210,220,255,0.9);
+}
+.category-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+  user-select: none;
+}
+.category-left {
+  display:flex;
+  align-items:center;
+  gap:1px;
+}
+.category-label {
+  font-family: 'Sawarabi Gothic', 'Noto Sans JP', sans-serif;
+  font-size:24px;
+  font-weight:500;
+  position: relative;
+  top: -2px;
+}
+
+/* ============================================
+   🟧 カテゴリ ON/OFF トグル（丸ボタン）
+   ============================================ */
+.category-toggle {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ff9b42;
+  background: #fff;
+  cursor: pointer;
+  transition: background .25s, box-shadow .25s, border-color .25s;
+}
+.category-toggle:checked {
+  background: radial-gradient(circle, #ffb36b 0%, #ff9b42 70%);
+  border-color: #ff9b42;
+  box-shadow: 0 0 6px rgba(255,150,50,0.6);
+  animation: catPop 0.25s ease-out;
+}
+@keyframes catPop {
+  0%   { transform: scale(0.6); opacity: 0.4; }
+  60%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1.0); opacity: 1; }
+}
+
+/* ============================================
+   🟦 カテゴリ合計（pill タグ）
+   ============================================ */
+.category-title {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.category-sum {
+  display:inline-block;
+  font-size:14px;
+  padding:3px 12px;
+  border-radius:999px;
+  font-weight:600;
+  background:linear-gradient(145deg, rgba(250,252,255,0.8), rgba(235,242,255,0.8));
+  border:1px solid rgba(150,170,255,0.55);
+  color:#3a6cff;
+  box-shadow:
+    0 2px 6px rgba(70,100,200,0.15),
+    inset 0 0 4px rgba(255,255,255,0.6);
+  transition: opacity .25s, transform .25s, box-shadow .25s;
+}
+.category-sum.flash {
+  opacity:0.9;
+  transform:scale(1.12);
+  box-shadow:
+    0 0 14px rgba(120,150,255,0.45),
+    inset 0 0 6px rgba(255,255,255,0.8);
+}
+
+/* ============================================
+   🟦 アイテム一覧（4カラム）
+   ============================================ */
+.items {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+}
+
+/* ============================================
+   🟦 各アイテムのチェック部分
+   ============================================ */
+.check-wrapper {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(248,251,255,0.95);
+  border:1px solid rgba(185,211,255,0.6);
+  transition: background .25s, border-color .25s;
+  user-select: none;
+}
+.check-input {
+  display:none !important;
+}
+.check-wrapper.checked {
+  background:rgba(255,200,120,0.25);
+  border-color:rgba(255,160,60,0.8);
+}
+
+/* ドラッグ中の見た目 */
+.check-wrapper.dragging {
+  opacity: 0.5;
+}
+
+/* アイテム名 */
+.item-name {
+  flex:1;
+  font-family: 'Sawarabi Gothic', 'Noto Sans JP', sans-serif;
+  font-size:18px;
+  white-space:nowrap;
+}
+
+/* アイテム数値タグ */
+.item-value {
+  font-size:12px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:rgba(61,138,255,0.08);
+  border:1px solid rgba(61,138,255,0.25);
+}
+
+/* ============================================
+   🟦 日曜日モード
+   ============================================ */
+.sunday-toggle-container{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.sunday-label-text {
+  font-size:16px;
+  font-family: 'Sawarabi Gothic', 'Noto Sans JP', sans-serif;
+}
+.sunday-switch {
+  position: relative;
+  width: 60px;
+  height: 32px;
+}
+.sunday-switch input {
+  display: none;
+}
+.sunday-slider {
+  position:absolute;
+  inset: 0;
+  background: #cfd3da;
+  border-radius: 32px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+  transition: background .25s, box-shadow .25s;
+}
+.sunday-slider::before {
+  content: "";
+  position:absolute;
+  width: 26px;
+  height: 26px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius:50%;
+  box-shadow:0 2px 4px rgba(0,0,0,0.3);
+  transition: transform .22s, box-shadow .22s;
+}
+.sunday-switch input:checked + .sunday-slider {
+  background: linear-gradient(135deg, #4cd964, #3ac569);
+  box-shadow:0 0 6px rgba(76,217,100,0.6);
+}
+.sunday-switch input:checked + .sunday-slider::before {
+  transform: translateX(28px);
+}
+
+/* カテゴリ内：アイテム追加ボタン */
+.add-item-btn {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px dashed rgba(150,170,255,0.8);
+  background: rgba(250,252,255,0.6);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Sawarabi Gothic', 'Noto Sans JP', sans-serif;
+  transition: background .2s, border-style .2s;
+}
+.add-item-btn:hover {
+  background: #fff;
+  border-style: solid;
+}
+
+/* ▼ カテゴリ編集用ボタン行（＋項目追加の右） */
+.category-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.cat-undo-btn,
+.cat-reset-btn {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Sawarabi Gothic', 'Noto Sans JP', sans-serif;
+  color: #fff;
+}
+.cat-undo-btn {
+  background: linear-gradient(135deg,#8bb4ff,#6b8dff);
+}
+.cat-reset-btn {
+  background: linear-gradient(135deg,#ff9c8b,#ff6b6b);
+  /* 右端へ */
+  margin-left: auto;
+}
+
+/* ============================================
+   🟦 合計パネル
+   ============================================ */
+#southPanel {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  padding: 28px 16px 14px 16px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(150,170,240,0.9);
+  box-shadow: 0 -4px 18px rgba(60,80,150,0.25);
+  z-index: 20;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+/* 合計： と （xxキャンドル） → 黒 */
+#total {
+  font-family: 'Sawarabi Gothic', 'Noto Sans JP', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: #000;
+}
+
+/* 真ん中の数値だけ色を変える */
+#total .total-num {
+  color: #5874c4 !important;
+  font-weight: 900;
+  font-size: 32px;
+}
+
+#required {
+  font-size:18px;
+  font-weight:700;
+  color:#000;
+}
+
+.daily-list {
+  display:none;
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* ============================================
+   🟦 ゲージ
+   ============================================ */
+.gauge-wrapper {
+  margin:6px 0;
+  position:relative;
+}
+.gauge-track {
+  height:18px;
+  border-radius:999px;
+  background:#d0d0d0;
+  border:1px solid #aaa;
+  overflow:hidden;
+}
+.gauge-fill {
+  height:100%;
+  width:0%;
+  background:linear-gradient(180deg,#afc9f0,#3787ff);
+  transition:width .4s ease-out;
+}
+
+/* ろうそくマーカー（デフォルト） */
+#gaugeMarker {
+  position: absolute;
+  top: -80px;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 1.0;
+  filter: drop-shadow(0px 4px 7px rgba(0, 0, 0, 0.25));
+  transition: left .4s ease-out;
+  transform: translateX(-65%);
+}
+
+/* ============================================
+   🟦 光粒（PC版デフォルト）
+   ============================================ */
+.light-particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    rgba(255, 210, 140, 0.55),   /* ほんのりオレンジ＋蝋燭光の中心 */
+    rgba(255, 210, 140, 0.28) 40%, /* 白背景でも視認できる薄さ */
+    rgba(255, 210, 140, 0.0) 70%   /* 外側は透明 */
+  );
+  transform: translate(-50%, -50%) scale(1.0);
+  opacity: 0.9;
+}
+
+/* ============================================
+   🟦 メモリ線
+   ============================================ */
+.gauge-segment {
+  position:absolute;
+  bottom:-6px;
+  width:2px;
+  height:10px;
+  background:rgba(80,80,80,0.45);
+}
+.gauge-segment.major {
+  width:3px;
+  height:16px;
+  background:rgba(30,30,30,0.9);
+}
+
+/* ============================================
+   🟦 ラベル（ゲージ上数字）
+   ============================================ */
+#topLabelLayer {
+  position:fixed;
+  left:0;
+  top:0;
+  width:100vw;
+  height:100vh;
+  pointer-events:none;
+  z-index: 9999;
+}
+.gauge-top-label {
+  position:absolute;
+  font-size:12px;
+  font-weight:700;
+  transform:translateX(-50%);
+  text-shadow:
+    0 0 3px #fff,
+    0 0 5px #fff,
+    0 0 7px #fff,
+    0 0 9px #fff;
+}
+
+#bottomLabelLayer {
+  position:absolute;
+  left:0;
+  top:100%;
+  width:100%;
+  pointer-events:none;
+}
+.bottom-gauge-label {
+  position:absolute;
+  font-size:14px;
+  font-weight:700;
+  top: 6px !important;
+  transform:translateX(-50%);
+}
+
+/* ============================================
+   🟦 ボタン（下パネル）
+   ============================================ */
+.button-group{
+  display:flex;
+  gap:8px;
+}
+#resetButton,
+#undoButton {
+  padding:8px 18px;
+  border-radius:999px;
+  color:white;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+}
+#resetButton {
+  background:linear-gradient(135deg,#ff8b8b,#ff6b6b);
+}
+#undoButton {
+  background:linear-gradient(135deg,#8bb4ff,#6b8dff);
+}
+.south-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 0px;
+}
+
+/*  🟧 スマートフォン対応  */
+@media (max-width:480px){
+
+  /* カテゴリタイトル */
+  .category-title {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-bottom: 6px;
+  }
+
+  .category-label {
+    font-family: 'Sawarabi Gothic', 'Noto Sans JP', sans-serif;
+    font-size:14px !important;
+    font-weight:500;
+    position: relative;
+    top: 0px;
+  }
+
+  /* アイテム2カラム */
+  .items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 12px;
+  }
+
+  .check-wrapper {
+    width: 90%;
+    margin: 0;
+  }
+
+  .item-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+  }
+
+  .item-button {
+    flex: 1 1 45%;
+  }
+
+  .item-name {
+    font-size: 14px !important;
+  }
+
+  /* 合計パネル（“合計:” を消して数字だけ） */
+  #total {
+    font-size: 0;
+  }
+  #total .slot-wrapper,
+  #total .slot-wrapper * {
+    font-size: 20px !important;
+  }
+  #total span,
+  #totalCandles {
+    font-size: 14px !important;
+  }
+
+  /* スマホでも（数字キャンドル）を表示 */
+  #total .total-candle-text {
+    font-size: 14px !important;
+    display: inline !important;
+  }
+
+  /* ゲージ関連 */
+  .gauge-top-label {
+    top: -18px !important;
+  }
+
+  /* ▼ キャンドル 42px に縮小（スマホ専用） */
+  #gaugeMarker {
+    width: 42px !important;
+    height: 42px !important;
+    top: -23px !important;
+    transform: translateX(-44%) !important;
+  }
+
+  #gaugeMarker img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .gauge-wrapper {
+    margin-top: -24px;
+    margin-bottom: 24px !important;
+  }
+
+  .bottom-gauge-label {
+    top: 2px !important;
+  }
+
+  /* デイリー一覧 */
+  #dailyList {
+    display: block !important;
+    white-space: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  #required {
+    display: none;
+  }
+
+  .south-bottom-row > div:first-child {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* ▼ スマホのリセット／元に戻す */
+  #resetButton,
+  #undoButton {
+    padding: 10px 20px !important;
+    font-size: 0 !important;
+    line-height: 1.2 !important;
+    min-width: 100px !important;
+    min-height: 38px !important;
+    position: relative;
+    border-radius: 26px !important;
+    padding: 10px 0 !important;
+  }
+
+  #undoButton::after {
+    content: "元に戻す";
+    font-size: 14px;
+    line-height: 1.2;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #resetButton::before {
+    content: none !important;
+  }
+
+  #resetButton::after {
+    content: "リセット";
+    font-size: 14px;
+    line-height: 1.2;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  /* ▼ キャンドル42に合わせた光粒サイズ */
+  .light-particle {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+/* ============================================
+   🟦 タブレット
+   ============================================ */
+@media (min-width:481px) and (max-width:768px){
+  .items { grid-template-columns:repeat(3,1fr) !important; }
+}
+
+/* ============================================
+   🟦 タブレット／PC 共通
+   ============================================ */
+@media (min-width: 481px) {
+
+  #gaugeMarker {
+    width: 64px !important;
+    height: 64px !important;
+    top: -45px !important;
+    transform: translateX(-44%);
+  }
+
+  #gaugeMarker img {
+    width: 100% !important;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .gauge-wrapper {
+    margin-bottom: 36px;
+  }
+}
+
+/* ============================================
+   🟦 PC
+   ============================================ */
+@media (min-width:769px){
+  .items { grid-template-columns:repeat(4,1fr); }
+  .gauge-top-label { display:block !important; }
+}
+
+/* ============================================
+   🟦 合計スロット数字アニメーション（リール式）
+   ============================================ */
+.slot-wrapper {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  margin: 0 4px;
+}
+.digit-slot {
+  display: inline-block;
+  width: 26px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.9);
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.18),
+    inset 0 0 4px rgba(255,255,255,0.8);
+}
+.digit-reel {
+  display: block;
+  transition: transform 0.45s ease-out;
+  will-change: transform;
+}
+.digit-reel span {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: #5874c4;
+  text-shadow:
+    0 0 2px rgba(255,255,255,0.8),
+    0 1px 0 rgba(0,0,0,0.25);
+}
+
+/* スマホ版クイックパネル — 2列 / 改行なし */
+@media (max-width: 480px) {
+
+  #quickPanel {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-auto-rows: auto;
+    gap: 8px 12px !important;
+    white-space: nowrap !important;
+  }
+
+  #quickPanel .quick-btn {
+    width: 100% !important;
+    white-space: nowrap !important;
+    text-align: center;
+  }
+
+}

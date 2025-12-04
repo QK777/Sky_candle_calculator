@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Sky キャンドル計算機</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- フォント -->
+<link
+  href="https://fonts.googleapis.com/css2?
+    family=Baloo+2:wght@400;600&
+    family=Roboto:wght@100;300&
+    family=Noto+Sans+JP:wght@100;700&
+    family=Zen+Maru+Gothic:wght@400;500&
+    family=Sawarabi+Gothic
+    &display=swap"
+  rel="stylesheet"
+>
+
+<!-- 外部CSS -->
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="app">
+
+  <!-- タイトル -->
+  <div class="page-title-wrapper">
+    <div class="page-title-line">Sky: Children of the Light</div>
+    <div class="page-title-line">Candle Calculator</div>
+  </div>
+
+  <!-- ▼ クイックメニューパネル -->
+  <div id="quickPanel">
+    <button class="quick-btn" data-target="daily">デイリー</button>
+    <button class="quick-btn" data-target="big">大キャンドル</button>
+    <button class="quick-btn" data-target="season">シーズンキャンドル</button>
+    <button class="quick-btn" data-target="yami">闇の欠片</button>
+  </div>
+
+  <!-- ▼ モーダル背景 -->
+  <div id="modalOverlay">
+    <div id="modalWindow">
+      <div id="modalHeader">
+        <span id="modalTitle">タイトル</span>
+        <button id="modalClose">×</button>
+      </div>
+
+      <iframe id="modalFrame" src="" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- カテゴリカード -->
+  <div id="mainPanel"></div>
+
+  <!-- 画面下固定パネル -->
+  <div id="southPanel">
+
+    <div class="gauge-wrapper">
+      <div class="gauge-track" id="gaugeTrack">
+        <div class="gauge-fill" id="gaugeFill"></div>
+      </div>
+
+      <div id="gaugeMarker">
+        <img src="Sky_Candle3.png" alt="candle">
+      </div>
+
+      <div id="bottomLabelLayer"></div>
+    </div>
+
+    <!-- 合計 + ボタン行 -->
+    <div class="south-bottom-row">
+
+      <!-- 左：合計 -->
+      <div class="south-left">
+        <div id="total" class="total-bottom"></div>
+        <div id="dailyList" class="daily-list"></div>
+      </div>
+
+      <!-- 右：ボタン（チェック状態用） -->
+      <div class="south-right">
+        <button id="resetButton">全てリセット</button>
+        <button id="undoButton" style="display:none;">元に戻す</button>
+      </div>
+
+    </div>
+
+  </div><!-- southPanel END -->
+
+</div><!-- app END -->
+
+<!-- 上側ラベル -->
+<div id="topLabelLayer"></div>
+
+<!-- 外部JS -->
+<script src="main.js"></script>
+</body>
+</html>
